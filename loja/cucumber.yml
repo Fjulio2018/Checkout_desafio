@@ -1,0 +1,31 @@
+## YAML Template
+wip: -p default -t @wip
+default: -p html_report -p json_report -p chrome -p hml
+parallel: -p parallel_html_report -p json_report -p chrome_headless -p hml
+# rerun: -p rerun_html_report -p rerun_json_report -p chrome -p hml
+
+## Relatorios
+html_report: --format pretty --format html --out reports/teste_loja_ui_report_<%= Time.now.strftime("%Y%m%d_%H%M%S").to_s %>.html
+json_report: --format progress --format json --out reports/teste_loja_ui_report.json
+parallel_html_report: --format pretty --format html --out reports/teste_loja_ui_report_parallel_<%= ENV['TEST_ENV_NUMBER'] %>_<%= Time.now.strftime("%Y%m%d_%H%M%S").to_s %>.html
+
+## Logs
+logs: --format ParallelTests::Cucumber::FailuresLogger --out reports/rerun/cucumber_failures.log
+
+## Navegadores
+chrome: BROWSER=chrome
+chrome_headless: BROWSER=chrome_headless
+chrome_mobile: BROWSER=chrome_mobile
+edge: BROWSER=edge
+firefox: BROWSER=firefox
+firefox_headless: BROWSER=firefox_headless
+
+## Ambientes
+dev: ENVIRONMENT_TYPE=dev
+hml: ENVIRONMENT_TYPE=hml
+prd: ENVIRONMENT_TYPE=prd
+
+# Mobile
+mobile_galaxy_S5: -p json_report -p html_report -p chrome_mobile -p hml DEVICE=Galaxy_S5
+mobile_pixel_2: -p json_report -p html_report -p chrome_mobile -p hml DEVICE=Pixel_2
+mobile_iPad_Pro: -p json_report -p html_report -p chrome_mobile -p hml DEVICE=iPad_Pro
